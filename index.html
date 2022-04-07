@@ -1,17 +1,65 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Todos</title>
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
-<div id="list-items"></div>
 
-<script src="index.js" type="module"></script>
+<header class="header">
+    <nav class="nav">
+        <a class="data-not-auth" href="/auth.html">auth</a>
+        <a class="data-not-auth" href="/reg.html">reg</a>
+        <a href="/">todos</a>
+    </nav>
+</header>
+
+<main class="main">
+    <div class="user-info" data-user-info>
+        <div data-user-email>
+        </div>
+
+        <div data-user-name>
+        </div>
+
+        <div data-user-age>
+        </div>
+        <a data-user-logout></a>
+    </div>
+
+    <div>
+        <div class="data-not-auth">
+            <span>
+                Чтобы получить доступ к todo авторизируйтесь
+            </span>
+
+            <a href="/auth.html"
+               class="button">
+                Перейти на страницу авторизации
+            </a>
+        </div>
+
+        <div class="add-todo-form">
+            <form id="formtodo" class="form form-todo data-auth">
+                <label class="text-field" data-input>
+                    <input class="text-field__input" type="text" name="description"
+                           placeholder="название задания" autocomplete="off">
+                    <span class="text-field__error"></span>
+                </label>
+                <button class="button" type="submit">
+                    Добавить
+                </button>
+            </form>
+        </div>
+        <div class="todos data-auth" data-todos>
+        </div>
+    </div>
+</main>
+
+<script src="todos.js" type="module"></script>
 </body>
 </html>
-

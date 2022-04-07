@@ -6,6 +6,22 @@
     width: 100%;
 }
 
+.form-todo {
+    flex-direction: row;
+}
+
+.form-todo .button {
+    margin-bottom: 0.8em;
+}
+
+.hideform {
+    display: none;
+}
+
+.showform {
+    display: flex;
+}
+
 .form_init .text-field__error {
     display: block;
 }

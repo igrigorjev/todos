@@ -1,12 +1,20 @@
 export class Auth {
-    constructor() {
+    constructor(authOk,authfalse) {
         if (typeof Auth.instance === 'object') {
             return Auth.instance
         }
-
-        this.userDataEl = document.querySelector('[data-user-info]')
+        this.init()
         Auth.instance = this
         return Auth.instance
+    }
+
+    init() {
+        this.userInfoEl = document.querySelector('[data-user-info]')
+        this.initlogoutListeners()
+    }
+
+    initlogoutListeners() {
+        this.userInfoEl.querySelector('[data-user-logout]').addEventListener('click', () => this.logout())
     }
 
     async auth(body) {
@@ -23,11 +31,7 @@ export class Auth {
         if (data.ok) {
             const token = data.data.accessToken
             this.setToken(token)
-            this.setUserInfo(data.data.user)
-        } else {
-            this.setUserInfo({}, true)
         }
-
 
         return data
     }
@@ -46,44 +50,58 @@ export class Auth {
         if (data.ok) {
             const token = data.data.accessToken
             this.setToken(token)
-            this.setUserInfo(data.data.user)
-        } else {
-            this.setUserInfo({}, true)
+            return data
         }
-
-        return data
     }
 
     async me() {
         if (!this.getToken()) {
-            return
+            return false
         }
 
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         headers.append('Authorization', `Bearer ${this.getToken()}`)
-
-        const result = await fetch("http://localhost:5000/api/me", {
+        console.log(headers.get('Authorization'))
+        let result = await fetch("http://localhost:5000/api/me", {
             method: 'GET',
             headers,
         })
 
         const data = await result.json()
 
-        if (data.ok) {
-            const token = data.data.accessToken
-            this.setToken(token)
+        if(data && data.ok) {
             this.setUserInfo(data.data.user)
+            this.setAuth()
         } else {
-            this.setUserInfo({}, true)
+            console.log("авторизация не удалась")
         }
+
+    }
+
+    async logout() {
+        this.removeToken()
+        this.setUserInfo('', true)
+        this.removeAuth()
+    }
+
+    setUserInfo(user, clear) {
+        const email = this.userInfoEl.querySelector('[data-user-email]')
+        const name = this.userInfoEl.querySelector('[data-user-name]')
+        const age = this.userInfoEl.querySelector('[data-user-age]')
+        const logout = this.userInfoEl.querySelector('[data-user-logout]')
+
+        email.innerText = clear ? '' : user.email
+        name.innerText = clear ? '' : user.name
+        age.innerText = clear ? '' : user.age
+        logout.innerText = clear ? '' : 'Выйти'
     }
 
     setToken(token) {
         localStorage.setItem('access-token', token)
     }
 
-    removeToken(token) {
+    removeToken() {
         localStorage.removeItem('access-token')
     }
 
@@ -91,13 +109,12 @@ export class Auth {
         return localStorage.getItem('access-token')
     }
 
-    setUserInfo(user, clear) {
-        const email = this.userDataEl.querySelector('[data-user-email]')
-        const name = this.userDataEl.querySelector('[data-user-name]')
-        const age = this.userDataEl.querySelector('[data-user-age]')
-
-        email.innerText = clear ? '' : user.email
-        name.innerText = clear ? '' : user.name
-        age.innerText = clear ? '' : user.age
+    setAuth() {
+        document.body.classList.add('auth-success')
     }
+
+    removeAuth() {
+        document.body.classList.remove('auth-success')
+    }
+
 }

@@ -4,14 +4,10 @@ import {Auth} from '/services/auth.js'
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init)
 } else {
-    try {
-        init()
-    } catch (e) {
-        console.log(e)
-    }
+    init()
 }
 
-function init() {
+async function init() {
     new Form(
         document.getElementById('reg'),
         {
@@ -79,9 +75,20 @@ function init() {
             .forEach(field => {
                 obj[field.name] = field.input.value
             })
-            await new Auth().reg(obj)
+            const data = await new Auth().reg(obj)
+
+            if(data.ok) {
+                auth.setUserInfo(data.data.user)
+                auth.setAuth()
+            } else {
+                auth.setUserInfo({}, true)
+                auth.removeAuth()
+            }
+
         }
     ).init()
 
-    new Auth().me()
+    const auth = new Auth()
+    await auth.me();
+
 }

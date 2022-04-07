@@ -12,9 +12,9 @@
 
 <header class="header">
     <nav class="nav">
-        <a href="/auth.html">auth</a>
-        <a href="/reg.html">reg</a>
-        <a href="/todos.html">todos</a>
+        <a class="data-not-auth" href="/auth.html">auth</a>
+        <a class="data-not-auth" href="/reg.html">reg</a>
+        <a href="/">todos</a>
     </nav>
 </header>
 
@@ -28,14 +28,15 @@
 
         <div data-user-age>
         </div>
+        <a data-user-logout></a>
     </div>
 
     <div class="reg-form">
-        <form id="reg" class="form">
+        <form id="reg" class="form data-not-auth">
             <label class="text-field" data-input>
                 <input class="text-field__input" type="text" name="email"
                        placeholder="введите Email" autocomplete="off"
-                       value="www@www.www">
+                       value="test@www.www">
                 <span class="text-field__error"></span>
             </label>
 
@@ -56,14 +57,14 @@
             <label class="text-field" data-input>
                 <input class="text-field__input" type="password" name="password"
                        placeholder="введите пароль" autocomplete="off"
-                       value="2222222222">
+                       value="testtest">
                 <span class="text-field__error"></span>
             </label>
 
             <label class="text-field">
                 <input class="text-field__input" type="password"
                        name="password-repeat" placeholder="повторите пароль"
-                       value="2222222222"
+                       value="testtest"
                        autocomplete="off">
                 <span class="text-field__error"></span>
             </label>

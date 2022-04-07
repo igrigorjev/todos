@@ -2,6 +2,7 @@
 @import "list-items.css";
 @import "form.css";
 @import "nav.css";
+@import "todos.css";
 
 *,
 *:before,
@@ -29,6 +30,10 @@ html, body {
     padding: 16px;
 }
 
-.reg-form {
+.auth-success .data-not-auth {
+    display: none;
 }
 
+.auth-success .data-auth {
+    display: flex;
+}

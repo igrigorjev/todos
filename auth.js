@@ -7,10 +7,8 @@ if (document.readyState === 'loading') {
     init()
 }
 
-function init() {
-    new Form(
-        document.getElementById('auth'),
-        {
+async function init() {
+    new Form(document.getElementById('auth'), {
             'email': (value) => {
                 if (!value) {
                     return 'Поле обязательно'
@@ -36,15 +34,23 @@ function init() {
         },
         async (fields) => {
             const obj = {}
-
             fields
-            .forEach(field => {
-                obj[field.name] = field.input.value
-            })
+                .forEach(field => {
+                    obj[field.name] = field.input.value
+                })
 
-            await new Auth().auth(obj)
+            const data = await auth.auth(obj)
+            if(data.ok) {
+                auth.setUserInfo(data.data.user)
+                auth.setAuth()
+            } else {
+                auth.setUserInfo({}, true)
+                auth.removeAuth()
+            }
         }
     ).init()
 
-    new Auth().me()
+    const auth = new Auth()
+    await auth.me()
+
 }

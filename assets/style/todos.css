@@ -1,0 +1,19 @@
+.todos {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.todo {
+    display: flex;
+    align-items: center;
+}
+
+.todo button {
+    margin-left: 16px;
+    color: red
+}
+
+.data-auth {
+    display: none;
+}

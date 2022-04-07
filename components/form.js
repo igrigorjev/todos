@@ -7,7 +7,6 @@ export default class Form {
         this.onSubmit = onSubmit
 
         const fields = []
-
         Object.entries(validators).forEach(entry => {
             const name = entry[0]
             const input = this.el.querySelector(`input[name="${name}"]`)
@@ -19,7 +18,6 @@ export default class Form {
                 isValid: false
             })
         })
-
         this.fields = fields
     }
 
@@ -87,6 +85,17 @@ export default class Form {
 
         if (isValid) {
             this.onSubmit(this.fields)
+            this.fields.forEach(el => el.input.value = "")
         }
+    }
+
+    showForm() {
+        this.el.classList.remove('hideform')
+        this.el.classList.add('showform')
+    }
+
+    hideForm() {
+        this.el.classList.remove("showform")
+        this.el.classList.add('hideform')
     }
 }
