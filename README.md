@@ -1,2 +1,10 @@
-# web-technologies-2022-1
-Веб-технологии в информационной среде (первое полугодие 2022)
+### todos
+
+
+#install http-server
+http-server i -g
+
+#run http-server or http-server on port 3000
+http-server --p 3000
+
+open http://localhost:3000/
